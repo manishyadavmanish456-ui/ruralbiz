@@ -1,11 +1,74 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-CREATE TABLE IF NOT EXISTS users(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),name TEXT NOT NULL,phone TEXT UNIQUE NOT NULL,password_hash TEXT NOT NULL,role TEXT NOT NULL CHECK(role IN('retailer','wholesaler','supplier')),created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS products(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),name TEXT NOT NULL,sku TEXT,unit TEXT NOT NULL DEFAULT 'piece',price NUMERIC(12,2) NOT NULL DEFAULT 0,stock NUMERIC(14,3) NOT NULL DEFAULT 0,owner_id UUID NOT NULL REFERENCES users(id),active BOOLEAN NOT NULL DEFAULT TRUE,created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS orders(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),retailer_id UUID NOT NULL REFERENCES users(id),wholesaler_id UUID NOT NULL REFERENCES users(id),supplier_id UUID REFERENCES users(id),total NUMERIC(12,2) NOT NULL DEFAULT 0,status TEXT NOT NULL DEFAULT 'pending',created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS order_items(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,product_id UUID NOT NULL REFERENCES products(id),quantity NUMERIC(14,3) NOT NULL CHECK(quantity>0),unit_price NUMERIC(12,2) NOT NULL);
-CREATE TABLE IF NOT EXISTS stock_movements(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),product_id UUID NOT NULL REFERENCES products(id),quantity NUMERIC(14,3) NOT NULL,reason TEXT NOT NULL,user_id UUID NOT NULL REFERENCES users(id),order_id UUID REFERENCES orders(id),created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
-CREATE TABLE IF NOT EXISTS ledger_entries(id UUID PRIMARY KEY DEFAULT gen_random_uuid(),party_id UUID NOT NULL REFERENCES users(id),created_by UUID NOT NULL REFERENCES users(id),entry_type TEXT NOT NULL CHECK(entry_type IN('credit','debit')),amount NUMERIC(12,2) NOT NULL CHECK(amount>=0),note TEXT,created_at TIMESTAMPTZ NOT NULL DEFAULT NOW());
-CREATE INDEX IF NOT EXISTS idx_products_owner ON products(owner_id);
-CREATE INDEX IF NOT EXISTS idx_orders_retailer ON orders(retailer_id);
-CREATE INDEX IF NOT EXISTS idx_orders_wholesaler ON orders(wholesaler_id);
-CREATE INDEX IF NOT EXISTS idx_ledger_party ON ledger_entries(party_id);
+
+CREATE TABLE IF NOT EXISTS users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  phone TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL,
+  role TEXT NOT NULL CHECK (role IN ('retailer', 'wholesaler', 'supplier')),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  sku TEXT,
+  unit TEXT NOT NULL DEFAULT 'piece',
+  price NUMERIC(12,2) NOT NULL DEFAULT 0,
+  stock NUMERIC(14,3) NOT NULL DEFAULT 0,
+  owner_id UUID NOT NULL REFERENCES users(id),
+  active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  retailer_id UUID NOT NULL REFERENCES users(id),
+  wholesaler_id UUID NOT NULL REFERENCES users(id),
+  supplier_id UUID REFERENCES users(id),
+  total NUMERIC(12,2) NOT NULL DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
+  product_id UUID NOT NULL REFERENCES products(id),
+  quantity NUMERIC(14,3) NOT NULL CHECK (quantity > 0),
+  unit_price NUMERIC(12,2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS stock_movements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  product_id UUID NOT NULL REFERENCES products(id),
+  quantity NUMERIC(14,3) NOT NULL,
+  reason TEXT NOT NULL,
+  user_id UUID NOT NULL REFERENCES users(id),
+  order_id UUID REFERENCES orders(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS ledger_entries (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  party_id UUID NOT NULL REFERENCES users(id),
+  created_by UUID NOT NULL REFERENCES users(id),
+  entry_type TEXT NOT NULL CHECK (entry_type IN ('credit', 'debit')),
+  amount NUMERIC(12,2) NOT NULL CHECK (amount >= 0),
+  note TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_products_owner
+ON products(owner_id);
+
+CREATE INDEX IF NOT EXISTS idx_orders_retailer
+ON orders(retailer_id);
+
+CREATE INDEX IF NOT EXISTS idx_orders_wholesaler
+ON orders(wholesaler_id);
+
+CREATE INDEX IF NOT EXISTS idx_ledger_party
+ON ledger_entries(party_id);
