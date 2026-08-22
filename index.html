@@ -1,1 +1,2246 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RuralBiz | Retail & Wholesale</title>
+
+<style>
+:root{
+  --bg:#f5f7fb;
+  --card:#fff;
+  --text:#182235;
+  --muted:#6b778c;
+  --primary:#1769e0;
+  --border:#e1e6ef;
+  --green:#16803c;
+  --red:#c32626;
+  --yellow:#9b7200;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  height:64px;
+  background:#12233b;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+.brand{
+  font-weight:900;
+  font-size:21px;
+}
+
+.header-right{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.pill{
+  font-size:12px;
+  background:#e9f1ff;
+  color:#123b79;
+  padding:7px 10px;
+  border-radius:18px;
+  font-weight:800;
+}
+
+nav{
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  gap:7px;
+  padding:10px;
+  overflow:auto;
+  position:sticky;
+  top:64px;
+  z-index:4;
+}
+
+nav button{
+  border:0;
+  background:#edf1f7;
+  color:#25344c;
+  padding:10px 13px;
+  border-radius:9px;
+  font-weight:800;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+nav button.active{
+  background:var(--primary);
+  color:#fff;
+}
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:18px;
+}
+
+.section{
+  display:none;
+}
+
+.section.active{
+  display:block;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(205px,1fr));
+  gap:13px;
+}
+
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 2px 8px #00000008;
+}
+
+.stat{
+  font-size:27px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.muted{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.green{color:var(--green)}
+.red{color:var(--red)}
+.yellow{color:var(--yellow)}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.wrap{flex-wrap:wrap}
+.gap{gap:9px}
+
+button{
+  cursor:pointer;
+}
+
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:10px 13px;
+  font-weight:800;
+}
+
+.primary{
+  background:var(--primary);
+  color:#fff;
+}
+
+.secondary{
+  background:#eaf0f7;
+  color:#20324d;
+}
+
+.danger{
+  background:#ffe4e4;
+  color:#9b1c1c;
+}
+
+.success{
+  background:#e4f7eb;
+  color:#126d34;
+}
+
+input,select{
+  width:100%;
+  padding:11px;
+  border:1px solid #cbd4e1;
+  border-radius:9px;
+  background:#fff;
+}
+
+.form{
+  display:grid;
+  gap:9px;
+}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:9px;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:10px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+  font-size:13px;
+  vertical-align:top;
+}
+
+th{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+.tag{
+  display:inline-block;
+  padding:4px 7px;
+  border-radius:12px;
+  font-size:11px;
+  font-weight:800;
+  background:#edf3ff;
+  color:#1769e0;
+}
+
+.tag.green{
+  background:#e5f7eb;
+}
+
+.tag.red{
+  background:#ffe6e6;
+}
+
+.tag.yellow{
+  background:#fff5d5;
+}
+
+.notice{
+  padding:12px;
+  border-left:4px solid #e1b300;
+  background:#fff8dd;
+  border-radius:8px;
+  margin-bottom:14px;
+}
+
+.empty{
+  text-align:center;
+  color:var(--muted);
+  padding:25px;
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0007;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:20;
+}
+
+.modal.open{
+  display:flex;
+}
+
+.modalbox{
+  background:#fff;
+  border-radius:15px;
+  padding:18px;
+  max-width:600px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:12px;
+}
+
+.product h3{
+  margin:8px 0;
+}
+
+.price{
+  font-size:19px;
+  font-weight:900;
+}
+
+.qty{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.qty button{
+  border:0;
+  background:#e8eef7;
+  border-radius:7px;
+  width:31px;
+  height:31px;
+  font-weight:900;
+}
+
+.login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login .card{
+  max-width:430px;
+  width:100%;
+}
+
+.error{
+  color:#b42318;
+  background:#fff0ef;
+  border-radius:8px;
+  padding:10px;
+  font-size:13px;
+  display:none;
+}
+
+.success-msg{
+  color:#126d34;
+  background:#eaf8ee;
+  border-radius:8px;
+  padding:10px;
+  font-size:13px;
+  display:none;
+}
+
+@media(max-width:650px){
+  main{padding:11px}
+  .stat{font-size:23px}
+  header{height:58px}
+  nav{top:58px}
+  th,td{
+    font-size:12px;
+    padding:8px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="login">
+
+  <div class="card">
+
+    <h1 style="margin-top:0">RuralBiz</h1>
+
+    <p class="muted">
+      B2B ordering + wholesaler/supplier inventory + digital khata
+    </p>
+
+    <div id="loginError" class="error"></div>
+    <div id="loginSuccess" class="success-msg"></div>
+
+    <div class="form">
+
+      <label>Phone</label>
+      <input id="loginPhone" type="tel" placeholder="Enter phone number">
+
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="Enter password">
+
+      <button class="btn primary" onclick="loginUser()">
+        Login
+      </button>
+
+      <button class="btn secondary" onclick="showRegister()">
+        Create New Account
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- REGISTER -->
+<div id="register" class="login" style="display:none">
+
+  <div class="card">
+
+    <h1 style="margin-top:0">Create RuralBiz Account</h1>
+
+    <div id="registerError" class="error"></div>
+
+    <div class="form">
+
+      <label>Name / Shop Name</label>
+      <input id="regName" placeholder="Your name or shop name">
+
+      <label>Phone</label>
+      <input id="regPhone" type="tel" placeholder="Phone number">
+
+      <label>Password</label>
+      <input id="regPassword" type="password" placeholder="Create password">
+
+      <label>Role</label>
+
+      <select id="regRole">
+        <option value="retailer">Retailer</option>
+        <option value="wholesaler">Wholesaler</option>
+        <option value="supplier">Supplier</option>
+      </select>
+
+      <button class="btn primary" onclick="registerUser()">
+        Register
+      </button>
+
+      <button class="btn secondary" onclick="showLogin()">
+        Back to Login
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- APP -->
+<div id="app" style="display:none">
+
+<header>
+
+  <div class="brand">
+    RuralBiz
+  </div>
+
+  <div class="header-right">
+
+    <span id="userPill" class="pill"></span>
+
+    <button class="btn secondary" onclick="logout()">
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<nav id="nav"></nav>
+
+
+<main>
+
+<section id="dashboard" class="section active"></section>
+
+<section id="products" class="section"></section>
+
+<section id="orders" class="section"></section>
+
+<section id="inventory" class="section"></section>
+
+<section id="khata" class="section"></section>
+
+<section id="partners" class="section"></section>
+
+<section id="settings" class="section"></section>
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+
+  <div class="modalbox" id="modalContent"></div>
+
+</div>
+
+
+<script>
+
+/* ================================
+   RURALBIZ API
+================================ */
+
+const API =
+  "https://ruralbiz-api-manish-t.onrender.com";
+
+
+let token =
+  localStorage.getItem("ruralbiz_token") || "";
+
+let currentUser =
+  JSON.parse(
+    localStorage.getItem("ruralbiz_user") || "null"
+  );
+
+let productsData = [];
+let ordersData = [];
+let cart = {};
+
+
+/* ================================
+   BASIC HELPERS
+================================ */
+
+function money(value){
+
+  return "₹" +
+    Math.round(Number(value) || 0)
+    .toLocaleString("en-IN");
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+function showError(id,message){
+
+  const el =
+    document.getElementById(id);
+
+  if(!el) return;
+
+  el.textContent = message;
+  el.style.display = "block";
+
+}
+
+
+function hideError(id){
+
+  const el =
+    document.getElementById(id);
+
+  if(el){
+
+    el.style.display = "none";
+
+  }
+
+}
+
+
+function saveSession(){
+
+  localStorage.setItem(
+    "ruralbiz_token",
+    token
+  );
+
+  localStorage.setItem(
+    "ruralbiz_user",
+    JSON.stringify(currentUser)
+  );
+
+}
+
+
+function clearSession(){
+
+  localStorage.removeItem(
+    "ruralbiz_token"
+  );
+
+  localStorage.removeItem(
+    "ruralbiz_user"
+  );
+
+  token = "";
+  currentUser = null;
+
+}
+
+
+async function api(path,options={}){
+
+  const headers = {
+    "Content-Type":"application/json",
+    ...(options.headers || {})
+  };
+
+  if(token){
+
+    headers.Authorization =
+      "Bearer " + token;
+
+  }
+
+  const response =
+    await fetch(API + path,{
+      ...options,
+      headers
+    });
+
+  let data = null;
+
+  try{
+
+    data = await response.json();
+
+  }catch{
+
+    data = {};
+
+  }
+
+  if(!response.ok){
+
+    throw new Error(
+      data.error ||
+      "Request failed"
+    );
+
+  }
+
+  return data;
+
+}
+
+
+/* ================================
+   LOGIN / REGISTER
+================================ */
+
+function showRegister(){
+
+  document.getElementById("login")
+    .style.display = "none";
+
+  document.getElementById("register")
+    .style.display = "flex";
+
+}
+
+
+function showLogin(){
+
+  document.getElementById("register")
+    .style.display = "none";
+
+  document.getElementById("login")
+    .style.display = "flex";
+
+}
+
+
+async function registerUser(){
+
+  hideError("registerError");
+
+  const name =
+    document.getElementById("regName")
+    .value.trim();
+
+  const phone =
+    document.getElementById("regPhone")
+    .value.trim();
+
+  const password =
+    document.getElementById("regPassword")
+    .value;
+
+  const role =
+    document.getElementById("regRole")
+    .value;
+
+  if(!name || !phone || !password){
+
+    showError(
+      "registerError",
+      "Please fill all fields."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    const data =
+      await api(
+        "/api/auth/register",
+        {
+          method:"POST",
+          body:JSON.stringify({
+            name,
+            phone,
+            password,
+            role
+          })
+        }
+      );
+
+    token = data.token;
+    currentUser = data.user;
+
+    saveSession();
+
+    boot();
+
+  }catch(error){
+
+    showError(
+      "registerError",
+      error.message
+    );
+
+  }
+
+}
+
+
+async function loginUser(){
+
+  hideError("loginError");
+
+  const phone =
+    document.getElementById("loginPhone")
+    .value.trim();
+
+  const password =
+    document.getElementById("loginPassword")
+    .value;
+
+  if(!phone || !password){
+
+    showError(
+      "loginError",
+      "Enter phone and password."
+    );
+
+    return;
+
+  }
+
+  try{
+
+    const data =
+      await api(
+        "/api/auth/login",
+        {
+          method:"POST",
+          body:JSON.stringify({
+            phone,
+            password
+          })
+        }
+      );
+
+    token = data.token;
+    currentUser = data.user;
+
+    saveSession();
+
+    boot();
+
+  }catch(error){
+
+    showError(
+      "loginError",
+      error.message
+    );
+
+  }
+
+}
+
+
+function logout(){
+
+  clearSession();
+
+  location.reload();
+
+}
+
+
+/* ================================
+   START APP
+================================ */
+
+function boot(){
+
+  if(!token || !currentUser){
+
+    document.getElementById("login")
+      .style.display = "flex";
+
+    return;
+
+  }
+
+  document.getElementById("login")
+    .style.display = "none";
+
+  document.getElementById("register")
+    .style.display = "none";
+
+  document.getElementById("app")
+    .style.display = "block";
+
+  document.getElementById("userPill")
+    .textContent =
+      currentUser.name +
+      " · " +
+      currentUser.role.toUpperCase();
+
+  buildNav();
+
+  renderDashboard();
+
+}
+
+
+function buildNav(){
+
+  let items = [];
+
+  if(currentUser.role === "retailer"){
+
+    items = [
+      ["dashboard","Dashboard"],
+      ["products","Products"],
+      ["orders","My Orders"],
+      ["khata","My Khata"],
+      ["partners","Partners"]
+    ];
+
+  }
+
+  else if(currentUser.role === "wholesaler"){
+
+    items = [
+      ["dashboard","Dashboard"],
+      ["products","Products"],
+      ["orders","Orders"],
+      ["inventory","Inventory"],
+      ["khata","Khata"],
+      ["partners","Retailers"]
+    ];
+
+  }
+
+  else if(currentUser.role === "supplier"){
+
+    items = [
+      ["dashboard","Dashboard"],
+      ["inventory","Inventory"],
+      ["orders","Orders"],
+      ["partners","Wholesalers"]
+    ];
+
+  }
+
+  document.getElementById("nav")
+    .innerHTML =
+      items.map(
+        (item,index)=>`
+          <button
+            class="${index===0?"active":""}"
+            onclick="showSection('${item[0]}',this)">
+            ${item[1]}
+          </button>
+        `
+      ).join("");
+
+}
+
+
+function showSection(id,button){
+
+  document
+    .querySelectorAll(".section")
+    .forEach(
+      section =>
+        section.classList.remove("active")
+    );
+
+  const section =
+    document.getElementById(id);
+
+  if(section){
+
+    section.classList.add("active");
+
+  }
+
+  document
+    .querySelectorAll("nav button")
+    .forEach(
+      btn =>
+        btn.classList.remove("active")
+    );
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+  renderSection(id);
+
+}
+
+
+function renderSection(id){
+
+  if(id === "dashboard")
+    renderDashboard();
+
+  if(id === "products")
+    renderProducts();
+
+  if(id === "orders")
+    renderOrders();
+
+  if(id === "inventory")
+    renderInventory();
+
+  if(id === "khata")
+    renderKhata();
+
+  if(id === "partners")
+    renderPartners();
+
+}
+
+
+/* ================================
+   DASHBOARD
+================================ */
+
+async function renderDashboard(){
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  dashboard.innerHTML = `
+    <h2>Dashboard</h2>
+
+    <div class="notice">
+      Payment gateway is intentionally disabled.
+      RuralBiz records
+      <b>paid / due / balance</b>
+      only.
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+        <div class="muted">Account</div>
+        <div class="stat">
+          ${escapeHtml(currentUser.name)}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="muted">Role</div>
+        <div class="stat">
+          ${currentUser.role}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="muted">Database</div>
+        <div class="stat green">
+          Connected
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="muted">API</div>
+        <div class="stat green">
+          Online
+        </div>
+      </div>
+
+    </div>
+
+    <div class="card" style="margin-top:14px">
+
+      <h3>Quick Actions</h3>
+
+      <div class="row wrap gap">
+
+        ${
+          currentUser.role === "retailer"
+          ?
+          `<button
+             class="btn primary"
+             onclick="goTo('products')">
+             Browse Products
+           </button>`
+          :
+          ""
+        }
+
+        ${
+          ["wholesaler","supplier"].includes(
+            currentUser.role
+          )
+          ?
+          `<button
+             class="btn primary"
+             onclick="goTo('inventory')">
+             Manage Inventory
+           </button>`
+          :
+          ""
+        }
+
+        ${
+          ["retailer","wholesaler"].includes(
+            currentUser.role
+          )
+          ?
+          `<button
+             class="btn secondary"
+             onclick="goTo('orders')">
+             View Orders
+           </button>`
+          :
+          ""
+        }
+
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function goTo(id){
+
+  const button =
+    [...document.querySelectorAll("nav button")]
+      .find(
+        b =>
+          b.textContent
+            .toLowerCase()
+            .includes(id)
+      );
+
+  showSection(id,button);
+
+}
+
+
+/* ================================
+   PRODUCTS
+================================ */
+
+async function loadProducts(){
+
+  productsData =
+    await api("/api/products");
+
+  return productsData;
+
+}
+
+
+async function renderProducts(){
+
+  const section =
+    document.getElementById("products");
+
+  section.innerHTML = `
+    <h2>Products</h2>
+
+    <div class="notice">
+      Products are loaded from the
+      RuralBiz PostgreSQL database.
+    </div>
+
+    <div id="productsList"
+         class="product-grid">
+      <div class="empty">
+        Loading products...
+      </div>
+    </div>
+
+    <div class="card"
+         style="margin-top:14px">
+
+      <div class="row">
+        <b>Cart Total</b>
+        <b id="cartTotal">₹0</b>
+      </div>
+
+      ${
+        currentUser.role === "retailer"
+        ?
+        `<button
+           class="btn primary"
+           style="margin-top:10px"
+           onclick="placeOrder()">
+           Place Order
+         </button>`
+        :
+        ""
+      }
+
+    </div>
+  `;
+
+  try{
+
+    await loadProducts();
+
+    renderProductCards();
+
+  }catch(error){
+
+    document.getElementById(
+      "productsList"
+    ).innerHTML =
+      `<div class="empty red">
+        ${escapeHtml(error.message)}
+       </div>`;
+
+  }
+
+}
+
+
+function renderProductCards(){
+
+  const container =
+    document.getElementById("productsList");
+
+  if(!container) return;
+
+  if(!productsData.length){
+
+    container.innerHTML =
+      `<div class="empty">
+        No products available.
+       </div>`;
+
+    return;
+
+  }
+
+  container.innerHTML =
+    productsData.map(product=>{
+
+      const qty =
+        cart[product.id] || 0;
+
+      return `
+        <div class="card product">
+
+          <span class="tag ${
+            Number(product.stock) <= 0
+            ? "red"
+            : Number(product.stock) < 10
+            ? "yellow"
+            : "green"
+          }">
+
+            ${
+              Number(product.stock) <= 0
+              ? "Out of stock"
+              : "Stock: " + product.stock
+            }
+
+          </span>
+
+          <h3>
+            ${escapeHtml(product.name)}
+          </h3>
+
+          <div class="muted">
+            SKU:
+            ${escapeHtml(product.sku || "-")}
+          </div>
+
+          <div class="muted">
+            Unit:
+            ${escapeHtml(product.unit)}
+          </div>
+
+          <div class="price">
+            ${money(product.price)}
+          </div>
+
+          ${
+            currentUser.role === "retailer"
+            ?
+            `
+            <div class="qty"
+                 style="margin-top:12px">
+
+              <button
+                onclick="changeCart('${product.id}',-1)">
+                −
+              </button>
+
+              <b>${qty}</b>
+
+              <button
+                onclick="changeCart('${product.id}',1)">
+                +
+              </button>
+
+            </div>
+            `
+            :
+            ""
+          }
+
+        </div>
+      `;
+
+    }).join("");
+
+  updateCartTotal();
+
+}
+
+
+function changeCart(id,change){
+
+  const product =
+    productsData.find(
+      p => p.id === id
+    );
+
+  if(!product) return;
+
+  const old =
+    cart[id] || 0;
+
+  const next =
+    Math.max(
+      0,
+      Math.min(
+        Number(product.stock),
+        old + change
+      )
+    );
+
+  cart[id] = next;
+
+  renderProductCards();
+
+}
+
+
+function updateCartTotal(){
+
+  const total =
+    Object.entries(cart)
+      .reduce(
+        (sum,[id,qty])=>{
+
+          const product =
+            productsData.find(
+              p => p.id === id
+            );
+
+          return sum +
+            (
+              Number(product?.price || 0) *
+              Number(qty)
+            );
+
+        },
+        0
+      );
+
+  const element =
+    document.getElementById("cartTotal");
+
+  if(element){
+
+    element.textContent =
+      money(total);
+
+  }
+
+}
+
+
+function cartTotal(){
+
+  return Object.entries(cart)
+    .reduce(
+      (sum,[id,qty])=>{
+
+        const product =
+          productsData.find(
+            p => p.id === id
+          );
+
+        return sum +
+          Number(product?.price || 0) *
+          Number(qty);
+
+      },
+      0
+    );
+
+}
+
+
+/* ================================
+   PLACE ORDER
+================================ */
+
+async function placeOrder(){
+
+  const items =
+    Object.entries(cart)
+      .filter(
+        ([_,quantity]) =>
+          Number(quantity) > 0
+      )
+      .map(
+        ([productId,quantity])=>({
+          productId,
+          quantity:Number(quantity)
+        })
+      );
+
+  if(!items.length){
+
+    alert("Cart is empty.");
+
+    return;
+
+  }
+
+  const wholesalerId =
+    prompt(
+      "Enter Wholesaler ID"
+    );
+
+  if(!wholesalerId){
+
+    return;
+
+  }
+
+  try{
+
+    const order =
+      await api(
+        "/api/orders",
+        {
+          method:"POST",
+          body:JSON.stringify({
+            wholesalerId,
+            items
+          })
+        }
+      );
+
+    cart = {};
+
+    alert(
+      "Order placed successfully.\n\nOrder ID:\n" +
+      order.id
+    );
+
+    goTo("orders");
+
+  }catch(error){
+
+    alert(
+      "Order failed:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   ORDERS
+================================ */
+
+async function renderOrders(){
+
+  const section =
+    document.getElementById("orders");
+
+  section.innerHTML = `
+    <h2>Orders</h2>
+
+    <div class="card table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Total</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="ordersBody">
+          <tr>
+            <td colspan="4"
+                class="empty">
+              Loading...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+
+  try{
+
+    ordersData =
+      await api("/api/orders");
+
+    const body =
+      document.getElementById(
+        "ordersBody"
+      );
+
+    if(!ordersData.length){
+
+      body.innerHTML =
+        `<tr>
+          <td colspan="4"
+              class="empty">
+            No orders yet
+          </td>
+        </tr>`;
+
+      return;
+
+    }
+
+    body.innerHTML =
+      ordersData.map(order=>`
+
+        <tr>
+
+          <td>
+            <b>
+              ${escapeHtml(order.id)}
+            </b>
+            <br>
+            <span class="muted">
+              ${escapeHtml(
+                order.created_at || ""
+              )}
+            </span>
+          </td>
+
+          <td>
+            ${money(order.total)}
+          </td>
+
+          <td>
+            <span class="tag ${
+              order.status === "confirmed"
+              ? "green"
+              : order.status === "rejected"
+              ? "red"
+              : "yellow"
+            }">
+              ${escapeHtml(order.status)}
+            </span>
+          </td>
+
+          <td>
+
+            ${
+              currentUser.role === "wholesaler" &&
+              order.status === "pending"
+              ?
+              `<button
+                 class="btn success"
+                 onclick="confirmOrder('${order.id}')">
+                 Confirm
+               </button>`
+              :
+              ""
+            }
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    document.getElementById(
+      "ordersBody"
+    ).innerHTML =
+      `<tr>
+        <td colspan="4"
+            class="empty red">
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+
+  }
+
+}
+
+
+async function confirmOrder(id){
+
+  if(!confirm(
+    "Confirm this order?\nStock will be reduced automatically."
+  )){
+
+    return;
+
+  }
+
+  try{
+
+    await api(
+      "/api/orders/" + id + "/confirm",
+      {
+        method:"POST"
+      }
+    );
+
+    alert(
+      "Order confirmed.\nInventory updated automatically."
+    );
+
+    renderOrders();
+
+  }catch(error){
+
+    alert(
+      "Confirmation failed:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   INVENTORY
+================================ */
+
+async function renderInventory(){
+
+  const section =
+    document.getElementById("inventory");
+
+  section.innerHTML = `
+    <div class="row wrap">
+
+      <h2>Inventory</h2>
+
+      ${
+        ["wholesaler","supplier"]
+          .includes(currentUser.role)
+        ?
+        `<button
+           class="btn primary"
+           onclick="openProductForm()">
+           + Add Product
+         </button>`
+        :
+        ""
+      }
+
+    </div>
+
+    <div class="card table-wrap">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>SKU</th>
+            <th>Stock</th>
+            <th>Price</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="inventoryBody">
+          <tr>
+            <td colspan="6"
+                class="empty">
+              Loading...
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+
+  try{
+
+    await loadProducts();
+
+    const body =
+      document.getElementById(
+        "inventoryBody"
+      );
+
+    body.innerHTML =
+      productsData.map(product=>`
+
+        <tr>
+
+          <td>
+            <b>
+              ${escapeHtml(product.name)}
+            </b>
+          </td>
+
+          <td>
+            ${escapeHtml(product.sku || "-")}
+          </td>
+
+          <td>
+            <b>
+              ${product.stock}
+            </b>
+          </td>
+
+          <td>
+            ${money(product.price)}
+          </td>
+
+          <td>
+
+            ${
+              Number(product.stock) <= 0
+              ?
+              `<span class="tag red">
+                Out
+               </span>`
+              :
+              Number(product.stock) < 10
+              ?
+              `<span class="tag yellow">
+                Low
+               </span>`
+              :
+              `<span class="tag green">
+                OK
+               </span>`
+            }
+
+          </td>
+
+          <td>
+
+            ${
+              ["wholesaler","supplier"]
+                .includes(currentUser.role)
+              ?
+              `
+              <button
+                class="btn success"
+                onclick="stockUpdate('${product.id}',1)">
+                + Stock
+              </button>
+
+              <button
+                class="btn danger"
+                onclick="stockUpdate('${product.id}',-1)">
+                − Stock
+              </button>
+              `
+              :
+              "View only"
+            }
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+  }catch(error){
+
+    document.getElementById(
+      "inventoryBody"
+    ).innerHTML =
+      `<tr>
+        <td colspan="6"
+            class="empty red">
+          ${escapeHtml(error.message)}
+        </td>
+      </tr>`;
+
+  }
+
+}
+
+
+/* ================================
+   ADD PRODUCT
+================================ */
+
+function openProductForm(){
+
+  openModal(`
+
+    <h3>Add Product</h3>
+
+    <div class="form">
+
+      <input
+        id="productName"
+        placeholder="Product name">
+
+      <input
+        id="productSku"
+        placeholder="SKU">
+
+      <input
+        id="productUnit"
+        placeholder="Unit"
+        value="piece">
+
+      <input
+        id="productPrice"
+        type="number"
+        placeholder="Price">
+
+      <input
+        id="productStock"
+        type="number"
+        placeholder="Opening stock">
+
+      <button
+        class="btn primary"
+        onclick="addProduct()">
+        Save Product
+      </button>
+
+      <button
+        class="btn secondary"
+        onclick="closeModal()">
+        Cancel
+      </button>
+
+    </div>
+
+  `);
+
+}
+
+
+async function addProduct(){
+
+  const name =
+    document.getElementById(
+      "productName"
+    ).value.trim();
+
+  const sku =
+    document.getElementById(
+      "productSku"
+    ).value.trim();
+
+  const unit =
+    document.getElementById(
+      "productUnit"
+    ).value.trim() || "piece";
+
+  const price =
+    Number(
+      document.getElementById(
+        "productPrice"
+      ).value
+    );
+
+  const stock =
+    Number(
+      document.getElementById(
+        "productStock"
+      ).value
+    );
+
+  if(!name){
+
+    alert("Product name required.");
+
+    return;
+
+  }
+
+  try{
+
+    await api(
+      "/api/products",
+      {
+        method:"POST",
+        body:JSON.stringify({
+          name,
+          sku,
+          unit,
+          price,
+          stock
+        })
+      }
+    );
+
+    closeModal();
+
+    alert(
+      "Product added successfully."
+    );
+
+    renderInventory();
+
+  }catch(error){
+
+    alert(
+      "Product creation failed:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   STOCK
+================================ */
+
+async function stockUpdate(
+  productId,
+  direction
+){
+
+  const amount =
+    Number(
+      prompt(
+        direction > 0
+        ? "How much stock to add?"
+        : "How much stock to remove?"
+      )
+    );
+
+  if(!amount || amount <= 0){
+
+    return;
+
+  }
+
+  const quantity =
+    direction > 0
+    ? amount
+    : -amount;
+
+  try{
+
+    await api(
+      "/api/products/" +
+      productId +
+      "/stock",
+      {
+        method:"PATCH",
+        body:JSON.stringify({
+          quantity
+        })
+      }
+    );
+
+    alert(
+      "Inventory updated successfully."
+    );
+
+    renderInventory();
+
+  }catch(error){
+
+    alert(
+      "Stock update failed:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   KHATA
+================================ */
+
+async function renderKhata(){
+
+  const section =
+    document.getElementById("khata");
+
+  section.innerHTML = `
+
+    <h2>Digital Khata</h2>
+
+    <div class="notice">
+      Payment gateway is disabled.
+      This section records
+      credit, debit and balance.
+    </div>
+
+    <div class="card">
+
+      <h3>Open Party Ledger</h3>
+
+      <div class="form">
+
+        <input
+          id="partyId"
+          placeholder="Enter Party/User ID">
+
+        <button
+          class="btn primary"
+          onclick="loadLedger()">
+          View Ledger
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="ledgerResult"
+         style="margin-top:14px">
+    </div>
+
+  `;
+
+}
+
+
+async function loadLedger(){
+
+  const partyId =
+    document.getElementById(
+      "partyId"
+    ).value.trim();
+
+  if(!partyId){
+
+    alert("Enter Party ID.");
+
+    return;
+
+  }
+
+  try{
+
+    const ledger =
+      await api(
+        "/api/ledger/" +
+        partyId
+      );
+
+    const result =
+      document.getElementById(
+        "ledgerResult"
+      );
+
+    if(!ledger.length){
+
+      result.innerHTML =
+        `<div class="card empty">
+          No ledger entries.
+         </div>`;
+
+      return;
+
+    }
+
+    result.innerHTML = `
+
+      <div class="card table-wrap">
+
+        <h3>Ledger</h3>
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Amount</th>
+              <th>Note</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              ledger.map(entry=>`
+
+                <tr>
+
+                  <td>
+                    ${escapeHtml(
+                      entry.created_at
+                    )}
+                  </td>
+
+                  <td>
+                    <span class="tag ${
+                      entry.entry_type === "credit"
+                      ? "green"
+                      : "red"
+                    }">
+                      ${escapeHtml(
+                        entry.entry_type
+                      )}
+                    </span>
+                  </td>
+
+                  <td>
+                    ${money(entry.amount)}
+                  </td>
+
+                  <td>
+                    ${escapeHtml(
+                      entry.note || "-"
+                    )}
+                  </td>
+
+                </tr>
+
+              `).join("")
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    `;
+
+  }catch(error){
+
+    alert(
+      "Ledger loading failed:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* ================================
+   PARTNERS
+================================ */
+
+function renderPartners(){
+
+  const section =
+    document.getElementById(
+      "partners"
+    );
+
+  section.innerHTML = `
+
+    <h2>Partner Directory</h2>
+
+    <div class="notice">
+      Partner directory is ready in the
+      frontend. The current server.js does
+      not yet contain a partner/users API
+      endpoint, so the directory cannot
+      automatically load users yet.
+    </div>
+
+    <div class="card">
+
+      <h3>Current Account</h3>
+
+      <p>
+        <b>Name:</b>
+        ${escapeHtml(currentUser.name)}
+      </p>
+
+      <p>
+        <b>Phone:</b>
+        ${escapeHtml(currentUser.phone)}
+      </p>
+
+      <p>
+        <b>Role:</b>
+        ${escapeHtml(currentUser.role)}
+      </p>
+
+      <p>
+        <b>User ID:</b>
+        <span style="word-break:break-all">
+          ${escapeHtml(currentUser.id)}
+        </span>
+      </p>
+
+    </div>
+
+    <div class="card"
+         style="margin-top:14px">
+
+      <h3>Next step</h3>
+
+      <p class="muted">
+        Partner directory will become fully
+        automatic after adding the users/partners
+        endpoint to server.js.
+      </p>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ================================
+   SETTINGS
+================================ */
+
+function renderSettings(){
+
+  const section =
+    document.getElementById(
+      "settings"
+    );
+
+  section.innerHTML = `
+
+    <h2>Settings</h2>
+
+    <div class="card">
+
+      <h3>RuralBiz API</h3>
+
+      <p>
+        <b>API:</b>
+        <br>
+        ${API}
+      </p>
+
+      <p>
+        <b>Account:</b>
+        ${escapeHtml(currentUser.name)}
+      </p>
+
+      <p>
+        <b>Role:</b>
+        ${escapeHtml(currentUser.role)}
+      </p>
+
+      <button
+        class="btn danger"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
+  `;
+
+}
+
+
+/* ================================
+   MODAL
+================================ */
+
+function openModal(content){
+
+  document.getElementById(
+    "modalContent"
+  ).innerHTML = content;
+
+  document.getElementById(
+    "modal"
+  ).classList.add("open");
+
+}
+
+
+function closeModal(){
+
+  document.getElementById(
+    "modal"
+  ).classList.remove("open");
+
+}
+
+
+/* ================================
+   INITIAL START
+================================ */
+
+if(token && currentUser){
+
+  boot();
+
+}
+
+</script>
+
+</body>
+</html>
+```
 
